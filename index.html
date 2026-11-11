@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sans Triche — Tes vrais chiffres YouTube, vérifiés à la source</title>
+<meta name="description" content="Connecte ta chaîne YouTube en lecture seule et affiche tes vrais chiffres avec le badge Sans triche ✓. Fini les captures d'écran que tout le monde soupçonne.">
+<meta property="og:title" content="Sans Triche — Tes vrais chiffres, vérifiés à la source">
+<meta property="og:description" content="Le badge qui prouve que tes stats YouTube sont réelles. Réserve le tien.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b0d0c">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2338f28b'/><path d='M9 16.5l4.5 4.5L23 11' stroke='%230b0d0c' stroke-width='3.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0d0c;
+    --bg-2:#121513;
+    --line:#232824;
+    --text:#eef2ef;
+    --muted:#8d978f;
+    --green:#38f28b;
+    --green-dim:#1d4d33;
+    --red:#ff5a4f;
+    --radius:18px;
+    --display:'Archivo',system-ui,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:var(--display);font-size:17px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit}
+  .wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:20;
+    background:rgba(11,13,12,.82);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;
+    font-weight:800;font-stretch:110%;font-size:19px;letter-spacing:-.01em}
+  .check{
+    display:inline-grid;place-items:center;width:26px;height:26px;border-radius:7px;
+    background:var(--green);color:var(--bg);flex:none
+  }
+  .check svg{width:16px;height:16px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    background:var(--green);color:var(--bg);text-decoration:none;
+    font-weight:800;font-stretch:105%;font-size:16px;
+    padding:14px 22px;border-radius:999px;border:0;cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px -8px rgba(56,242,139,.55)}
+  .btn.small{padding:10px 16px;font-size:14px}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:72px 0 56px;position:relative}
+  .hero::before{
+    content:"";position:absolute;inset:-200px 0 auto 0;height:600px;z-index:-1;
+    background:radial-gradient(600px 300px at 75% 40%,rgba(56,242,139,.12),transparent 70%);
+  }
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .kicker{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:13px;color:var(--green);
+    border:1px solid var(--green-dim);background:rgba(56,242,139,.06);
+    padding:6px 12px;border-radius:999px;margin-bottom:22px
+  }
+  .kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite}
+  @keyframes pulse{50%{opacity:.25}}
+  h1{
+    font-size:clamp(42px,6.4vw,76px);line-height:.98;
+    font-weight:900;font-stretch:118%;letter-spacing:-.03em;margin-bottom:22px
+  }
+  h1 .strike{position:relative;color:var(--muted);white-space:nowrap}
+  h1 .strike::after{
+    content:"";position:absolute;left:-2%;right:-2%;top:54%;height:.12em;
+    background:var(--red);transform:rotate(-3deg);border-radius:4px
+  }
+  h1 em{font-style:normal;color:var(--green)}
+  .lead{font-size:19px;color:#c3cbc5;max-width:540px;margin-bottom:30px}
+  .hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+  .hint{font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+  /* Compare cards */
+  .compare{position:relative;height:440px}
+  .card{
+    position:absolute;border-radius:var(--radius);border:1px solid var(--line);
+    background:var(--bg-2);padding:20px;width:300px
+  }
+  .card .label{
+    font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--muted);margin-bottom:14px;display:flex;justify-content:space-between
+  }
+  .fake{left:0;top:10px;transform:rotate(-6deg);filter:saturate(.6);opacity:.8}
+  .fake .big{font-family:var(--mono);font-size:30px;font-weight:600}
+  .fake .stamp{
+    position:absolute;right:16px;top:-14px;transform:rotate(8deg);
+    border:2px solid var(--red);color:var(--red);border-radius:8px;
+    font-family:var(--mono);font-weight:600;font-size:12px;padding:6px 10px;
+    background:var(--bg);text-transform:uppercase;letter-spacing:.06em
+  }
+  .fake .edit{
+    display:inline-block;border:1px dashed var(--red);padding:0 4px;border-radius:4px
+  }
+  .real{right:0;top:120px;width:330px;border-color:var(--green-dim);
+    box-shadow:0 30px 80px -30px rgba(56,242,139,.35)}
+  .real .head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .avatar{width:42px;height:42px;border-radius:50%;
+    background:linear-gradient(135deg,#2c3a31,#4a6b57)}
+  .real .name{font-weight:800;font-size:16px;display:flex;align-items:center;gap:6px}
+  .real .name .check{width:18px;height:18px;border-radius:5px}
+  .real .name .check svg{width:11px;height:11px}
+  .real .sub{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+  .stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+  .stat b{display:block;font-family:var(--mono);font-size:19px;font-weight:600}
+  .stat span{font-size:12px;color:var(--muted)}
+  .bars{display:flex;align-items:flex-end;gap:5px;height:54px;margin-bottom:12px}
+  .bars i{flex:1;background:var(--green);border-radius:3px 3px 0 0;opacity:.85}
+  .source{font-family:var(--mono);font-size:11px;color:var(--green);display:flex;align-items:center;gap:6px}
+  .example-tag{
+    position:absolute;right:0;bottom:0;font-family:var(--mono);font-size:11px;color:var(--muted)
+  }
+
+  /* ---------- Sections ---------- */
+  section{padding:88px 0;border-top:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:13px;color:var(--green);margin-bottom:14px;text-transform:uppercase;letter-spacing:.08em}
+  h2{
+    font-size:clamp(32px,4.4vw,52px);line-height:1.02;font-weight:900;font-stretch:112%;
+    letter-spacing:-.025em;margin-bottom:18px;max-width:820px
+  }
+  .section-lead{color:#c3cbc5;font-size:18px;max-width:640px;margin-bottom:44px}
+
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .tile{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+  .tile .who{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:.06em}
+  .tile h3{font-size:21px;font-weight:800;font-stretch:108%;line-height:1.15;margin-bottom:10px}
+  .tile p{color:#aeb7b0;font-size:16px}
+
+  .steps{counter-reset:s;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .step{counter-increment:s;position:relative;padding:26px;border-radius:var(--radius);border:1px solid var(--line)}
+  .step::before{
+    content:"0" counter(s);font-family:var(--mono);font-size:13px;color:var(--bg);
+    background:var(--green);border-radius:6px;padding:3px 8px;display:inline-block;margin-bottom:18px;font-weight:600
+  }
+  .step h3{font-size:21px;font-weight:800;font-stretch:108%;margin-bottom:8px}
+  .step p{color:#aeb7b0;font-size:16px}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .list{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+  .list h3{font-size:18px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .list ul{list-style:none;display:grid;gap:12px}
+  .list li{display:flex;gap:12px;color:#c3cbc5;font-size:16px}
+  .list li::before{content:"✓";color:var(--green);font-weight:800;flex:none}
+  .list.no li::before{content:"✕";color:var(--red)}
+  .list .opt{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px;margin-left:6px;white-space:nowrap}
+
+  /* ---------- Form ---------- */
+  .form-section{background:linear-gradient(180deg,var(--bg) 0%,#0e1611 100%)}
+  .form-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:start}
+  .perks{list-style:none;display:grid;gap:14px;margin-top:26px}
+  .perks li{display:flex;gap:12px;align-items:flex-start;color:#c3cbc5}
+  .perks .check{width:22px;height:22px;border-radius:6px;margin-top:2px}
+  .perks .check svg{width:13px;height:13px}
+  .form-box{
+    background:var(--bg-2);border:1px solid var(--green-dim);border-radius:22px;
+    padding:28px 24px;min-height:420px;position:relative
+  }
+  .form-box iframe{display:block;border:0;width:100%}
+  .form-missing{
+    border:1px dashed var(--muted);border-radius:14px;padding:22px;color:var(--muted);
+    font-family:var(--mono);font-size:14px;line-height:1.6
+  }
+  .form-missing b{color:var(--text)}
+  .fallback{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:14px;text-align:center}
+  .privacy{font-size:13px;color:var(--muted);margin-top:16px;line-height:1.5}
+
+  /* ---------- FAQ ---------- */
+  .faq{display:grid;gap:12px;max-width:820px}
+  details{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  summary{cursor:pointer;list-style:none;font-weight:800;font-size:18px;display:flex;justify-content:space-between;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-family:var(--mono);color:var(--green);font-size:22px;line-height:1}
+  details[open] summary::after{content:"–"}
+  details p{color:#aeb7b0;margin-top:12px;font-size:16px}
+
+  /* ---------- Footer ---------- */
+  footer{border-top:1px solid var(--line);padding:40px 0 60px;color:var(--muted);font-size:14px}
+  .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;align-items:center}
+  .foot a{color:var(--text)}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .hero{padding:44px 0 32px}
+    .hero-grid,.form-grid,.split{grid-template-columns:1fr}
+    .grid3,.steps{grid-template-columns:1fr}
+    .compare{height:580px;max-width:420px;margin:10px auto 0;width:100%}
+    .real{top:150px}
+    .fake{width:250px}
+    .real{width:290px}
+    section{padding:64px 0}
+    .nav .btn{display:none}
+  }
+  @media (max-width:380px){
+    .real{width:265px}
+    .fake{width:220px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo" aria-label="Sans Triche, accueil">
+      <span class="check"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      Sans Triche
+    </a>
+    <a href="#badge" class="btn small">Réserver mon badge</a>
+  </div>
+</header>
+
+<main>
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="kicker"><span class="dot"></span>Premiers badges offerts aux créateurs gaming FR</div>
+        <h1>Tes stats.<br><span class="strike">En capture.</span><br><em>Vérifiées.</em></h1>
+        <p class="lead">Une capture d'écran de YouTube Studio, ça se truque en 10 secondes. Avec Sans Triche, tu connectes ta chaîne en lecture seule et tu affiches tes <strong>vrais chiffres</strong>, lus directement à la source. Personne ne peut les modifier. Pas même toi.</p>
+        <div class="hero-cta">
+          <a href="#badge" class="btn">Réserver mon badge Sans triche ✓</a>
+          <span class="hint">Gratuit · 1 minute</span>
+        </div>
+      </div>
+
+      <div class="compare" aria-hidden="true">
+        <div class="card fake">
+          <div class="label"><span>capture_studio.png</span><span>28 jours</span></div>
+          <div style="font-size:13px;color:var(--muted)">Vues</div>
+          <div class="big"><span class="edit">1,2 M</span></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:10px">Revenus estimés</div>
+          <div class="big" style="font-size:24px"><span class="edit">4 380 €</span></div>
+          <div class="stamp">Modifiable</div>
+        </div>
+
+        <div class="card real">
+          <div class="label"><span>Exemple de profil vérifié</span><span style="color:var(--green)">● en direct</span></div>
+          <div class="head">
+            <div class="avatar"></div>
+            <div>
+              <div class="name">TonPseudo
+                <span class="check"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+              <div class="sub">Gaming · France</div>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>184 k</b><span>Vues / 28 j</span></div>
+            <div class="stat"><b>47 %</b><span>Rétention moy.</span></div>
+            <div class="stat"><b>91 %</b><span>Audience FR/BE</span></div>
+            <div class="stat"><b>62 %</b><span>Trafic recherche</span></div>
+          </div>
+          <div class="bars">
+            <i style="height:40%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:70%"></i><i style="height:62%"></i><i style="height:85%"></i><i style="height:78%"></i><i style="height:100%"></i>
+          </div>
+          <div class="source">✓ Lu via l'API YouTube · lecture seule</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PROBLÈME ===== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Le problème</div>
+      <h2>Tout le monde annonce des chiffres. Personne ne peut les vérifier.</h2>
+      <p class="section-lead">Les abonnés et les vues publiques s'achètent. Les captures d'écran se retouchent. Résultat : les créateurs honnêtes paient pour ceux qui trichent.</p>
+      <div class="grid3">
+        <div class="tile">
+          <div class="who">Tu es créateur</div>
+          <h3>Tes vrais chiffres sont soupçonnés</h3>
+          <p>Tu envoies ta capture à une marque, elle doute. Tu n'as aucun moyen de prouver que tes vues sont réelles.</p>
+        </div>
+        <div class="tile">
+          <div class="who">Tu es une marque</div>
+          <h3>Tu paies à l'aveugle</h3>
+          <p>Faux abonnés, vues achetées, engagement gonflé : impossible de savoir ce que tu sponsorises vraiment.</p>
+        </div>
+        <div class="tile">
+          <div class="who">Tu achètes une formation</div>
+          <h3>« J'ai fait 500 000 vues »</h3>
+          <p>Vraiment ? Avant de payer une méthode, tu devrais pouvoir vérifier les résultats de celui qui la vend.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMMENT ÇA MARCHE ===== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Comment ça marche</div>
+      <h2>Trois étapes. Zéro capture d'écran.</h2>
+      <p class="section-lead">On ne regarde pas tes chiffres publics : on lit ceux de YouTube Studio, ceux qu'on ne peut pas acheter.</p>
+      <div class="steps">
+        <div class="step">
+          <h3>Tu connectes ta chaîne</h3>
+          <p>Connexion avec ton compte Google, en lecture seule. Sans Triche ne peut rien publier, rien modifier, rien supprimer.</p>
+        </div>
+        <div class="step">
+          <h3>On lit tes stats à la source</h3>
+          <p>Rétention, sources de trafic, pays de l'audience, revenus si tu le veux. Les chiffres se mettent à jour tout seuls.</p>
+        </div>
+        <div class="step">
+          <h3>Tu affiches ton badge</h3>
+          <p>Un profil public et un badge « Sans triche ✓ » à mettre dans ta bio, ton kit média ou ta page de vente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TU GARDES LE CONTRÔLE ===== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Tu gardes le contrôle</div>
+      <h2>Tu choisis ce qui est public.</h2>
+      <p class="section-lead">Tu peux couper l'accès à tout moment depuis ton compte Google, en deux clics.</p>
+      <div class="split">
+        <div class="list">
+          <h3>Ce que ton profil peut afficher</h3>
+          <ul>
+            <li>Vues et durée de visionnage réelles</li>
+            <li>Rétention moyenne de tes vidéos</li>
+            <li>Sources de trafic (recherche, suggestions, externe…)</li>
+            <li>Pays et tranches d'âge de ton audience</li>
+            <li>Revenus <span class="opt">si tu l'actives</span></li>
+          </ul>
+        </div>
+        <div class="list no">
+          <h3>Ce que Sans Triche ne fera jamais</h3>
+          <ul>
+            <li>Publier, modifier ou supprimer quoi que ce soit sur ta chaîne</li>
+            <li>Voir ton mot de passe Google</li>
+            <li>Afficher un créateur qui ne s'est pas connecté lui-même</li>
+            <li>Revendre tes données</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FORMULAIRE ===== -->
+  <section id="badge" class="form-section">
+    <div class="wrap form-grid">
+      <div>
+        <div class="eyebrow">Accès anticipé</div>
+        <h2>Réserve ton badge Sans triche ✓</h2>
+        <p class="section-lead" style="margin-bottom:0">On commence avec un petit groupe de créateurs gaming français. Laisse ta chaîne, on te recontacte dès que ta vérification est prête.</p>
+        <ul class="perks">
+          <li><span class="check"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Vérification offerte pour les premiers inscrits</li>
+          <li><span class="check"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Mis en avant dans le premier classement des créateurs vérifiés</li>
+          <li><span class="check"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Petites et moyennes chaînes bienvenues, même sans monétisation</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="form-box" id="form-box">
+          <!-- Le formulaire Tally s'affiche ici. L'ID se règle tout en bas, dans TALLY_ID. -->
+        </div>
+        <p class="fallback" id="fallback" hidden>Le formulaire ne s'affiche pas ? <a id="fallback-link" href="#" target="_blank" rel="noopener">Ouvre-le ici</a></p>
+        <p class="privacy">Tes informations servent uniquement à te recontacter au sujet de ton badge. Elles ne sont ni revendues ni partagées. Tu peux demander leur suppression à tout moment via Instagram <a href="https://www.instagram.com/sanstriche/" target="_blank" rel="noopener">@sanstriche</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Questions</div>
+      <h2>Ce qu'on nous demande.</h2>
+      <div class="faq">
+        <details>
+          <summary>Est-ce que c'est sûr de connecter ma chaîne ?</summary>
+          <p>La connexion passe par Google, avec une autorisation en lecture seule. Tu ne donnes jamais ton mot de passe à Sans Triche, et tu peux retirer l'accès à tout moment dans les paramètres de ton compte Google.</p>
+        </details>
+        <details>
+          <summary>Pourquoi pas juste mes abonnés et mes vues publiques ?</summary>
+          <p>Parce que ça s'achète. Les vrais signaux sont dans YouTube Studio : la rétention, les sources de trafic et le pays de l'audience. Des vues achetées s'y repèrent tout de suite.</p>
+        </details>
+        <details>
+          <summary>Je dois afficher mes revenus ?</summary>
+          <p>Non. Les revenus sont désactivés par défaut et ne concernent que les chaînes monétisées. Tu décides ce qui apparaît sur ton profil.</p>
+        </details>
+        <details>
+          <summary>C'est payant ?</summary>
+          <p>La vérification est offerte aux premiers créateurs inscrits via cette page.</p>
+        </details>
+        <details>
+          <summary>Quand est-ce que j'aurai mon badge ?</summary>
+          <p>On ouvre les premières vérifications fin novembre 2026, par petits groupes. Les inscrits de cette page passent en premier et sont prévenus par e-mail.</p>
+        </details>
+        <details>
+          <summary>Et TikTok, Twitch ?</summary>
+          <p>On commence par YouTube. Les autres plateformes viendront ensuite, si leurs accès officiels le permettent.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a href="#" class="logo" style="color:var(--text)">
+      <span class="check"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      Sans Triche
+    </a>
+    <div>Instagram <a href="https://www.instagram.com/sanstriche/" target="_blank" rel="noopener">@sanstriche</a></div>
+    <div>© 2026 Sans Triche · Non affilié à YouTube ni à Google.</div>
+  </div>
+</footer>
+
+<script>
+  /* =========================================================
+     À MODIFIER : colle ici l'ID de ton formulaire Tally.
+     C'est la fin du lien de partage : https://tally.so/r/ABC123 → "ABC123"
+     ========================================================= */
+  const TALLY_ID = "6DjdyB";
+
+  (function () {
+    const box = document.getElementById('form-box');
+
+    if (!TALLY_ID || TALLY_ID === "TON_ID") {
+      box.innerHTML = '<div class="form-missing"><b>Formulaire pas encore relié.</b><br>Ouvre index.html, cherche <b>TALLY_ID</b> tout en bas et remplace "TON_ID" par l\'ID de ton formulaire Tally.</div>';
+      return;
+    }
+
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('data-tally-src',
+      'https://tally.so/embed/' + TALLY_ID + '?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1');
+    iframe.setAttribute('loading', 'lazy');
+    iframe.setAttribute('width', '100%');
+    iframe.setAttribute('height', '520');
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('marginheight', '0');
+    iframe.setAttribute('marginwidth', '0');
+    iframe.setAttribute('title', 'Réserve ton badge Sans triche ✓');
+    box.appendChild(iframe);
+
+    const fb = document.getElementById('fallback');
+    document.getElementById('fallback-link').href = 'https://tally.so/r/' + TALLY_ID;
+    fb.hidden = false;
+
+    // Script officiel Tally (redimensionne le formulaire automatiquement)
+    const s = document.createElement('script');
+    s.src = 'https://tally.so/widgets/embed.js';
+    const fallbackLoad = function () {
+      document.querySelectorAll('iframe[data-tally-src]:not([src])').forEach(function (el) {
+        el.src = el.dataset.tallySrc;
+      });
+    };
+    s.onload = function () {
+      if (typeof Tally !== 'undefined') { Tally.loadEmbeds(); } else { fallbackLoad(); }
+    };
+    s.onerror = fallbackLoad;
+    document.body.appendChild(s);
+  })();
+</script>
+</body>
+</html>
